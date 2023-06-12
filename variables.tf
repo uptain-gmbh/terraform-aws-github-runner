@@ -307,6 +307,12 @@ variable "ami_filter" {
   default     = null
 }
 
+variable "runner_amazon_linux_2023" {
+  description = "Whether to use the 2023 version of Amazon Linux"
+  type        = bool
+  default     = false
+}
+
 variable "ami_owners" {
   description = "The list of owners used to select the AMI of action runner instances."
   type        = list(string)
