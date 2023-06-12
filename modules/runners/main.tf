@@ -161,7 +161,7 @@ resource "aws_launch_template" "runner" {
     post_install = var.userdata_post_install
     start_runner = templatefile(local.userdata_start_runner[var.runner_os], {
       metadata_tags     = var.metadata_options != null ? var.metadata_options.instance_metadata_tags : "enabled"
-      amazon_linux_2022 = var.runner_amazon_linux_2023
+      amazon_linux_2023 = var.runner_amazon_linux_2023
     })
     ghes_url        = var.ghes_url
     ghes_ssl_verify = var.ghes_ssl_verify
