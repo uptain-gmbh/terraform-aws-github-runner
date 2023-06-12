@@ -19,7 +19,7 @@ locals {
   s3_location_runner_distribution = var.enable_runner_binaries_syncer ? "s3://${var.s3_runner_binaries.id}/${var.s3_runner_binaries.key}" : ""
   default_ami = {
     "windows" = { name = ["Windows_Server-2022-English-Core-ContainersLatest-*"] }
-    "linux"   = var.runner_architecture == "arm64" ? { name = ["amzn2-ami-kernel-5.*-hvm-*-arm64-gp2"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-x86_64-gp2"] }
+    "linux"   = var.runner_architecture == "arm64" ? var.runner_amazon_linux_2023 ? { name = ["al2022-ami-2022.*-kernel-5.*-arm64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-arm64-gp2"] } : var.runner_amazon_linux_2023 ? { name = ["al2022-ami-2022.*-kernel-5.*-x86_64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-x86_64-gp2"] }
   }
 
   default_userdata_template = {
@@ -156,10 +156,12 @@ resource "aws_launch_template" "runner" {
     install_runner = templatefile(local.userdata_install_runner[var.runner_os], {
       S3_LOCATION_RUNNER_DISTRIBUTION = local.s3_location_runner_distribution
       RUNNER_ARCHITECTURE             = var.runner_architecture
+      RUNNER_AMAZON_LINUX_2023        = var.runner_amazon_linux_2023 ? "true" : "false"
     })
     post_install = var.userdata_post_install
     start_runner = templatefile(local.userdata_start_runner[var.runner_os], {
-      metadata_tags = var.metadata_options != null ? var.metadata_options.instance_metadata_tags : "enabled"
+      metadata_tags     = var.metadata_options != null ? var.metadata_options.instance_metadata_tags : "enabled"
+      amazon_linux_2022 = var.runner_amazon_linux_2023
     })
     ghes_url        = var.ghes_url
     ghes_ssl_verify = var.ghes_ssl_verify

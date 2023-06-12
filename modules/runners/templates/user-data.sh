@@ -18,7 +18,12 @@ ${pre_install}
 yum update -y
 
 # Install docker
+%{ if amazon_linux_2023 }
+yum install -y docker
+%{ else }
 amazon-linux-extras install docker
+%{ endif }
+
 service docker start
 usermod -a -G docker ec2-user
 

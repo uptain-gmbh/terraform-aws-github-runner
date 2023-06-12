@@ -4,6 +4,7 @@
 
 s3_location=${S3_LOCATION_RUNNER_DISTRIBUTION}
 architecture=${RUNNER_ARCHITECTURE}
+amazon_linux_2023=${RUNNER_AMAZON_LINUX_2023}
 
 if [ -z "$RUNNER_TARBALL_URL" ] && [ -z "$s3_location" ]; then
   echo "Neither RUNNER_TARBALL_URL or s3_location are set"
@@ -45,9 +46,13 @@ rm -rf $file_name
 os_id=$(awk -F= '/^ID/{print $2}' /etc/os-release)
 echo OS: $os_id
 
-# Install libicu60 for arm64 on non-ubuntu
+# Install libicu/libicu60 for arm64 on non-ubuntu
 if [[ "$architecture" == "arm64" ]] && [[ ! "$os_id" =~ ^ubuntu.* ]]; then
-  yum install -y libicu60
+  if [[ "$amazon_linux_2023" == "true" ]]; then
+    yum install -y libicu
+  else
+    yum install -y libicu60
+  fi
 fi
 
 # Install dependencies for ubuntu

@@ -287,6 +287,12 @@ variable "runner_architecture" {
   default     = "x64"
 }
 
+variable "runner_amazon_linux_2023" {
+  description = "Whether to use the 2023 version of Amazon Linux"
+  type        = bool
+  default     = false
+}
+
 variable "idle_config" {
   description = "List of time period that can be defined as cron expression to keep a minimum amount of runners active instead of scaling down to 0. By defining this list you can ensure that in time periods that match the cron expression within 5 seconds a runner is kept idle."
   type = list(object({
