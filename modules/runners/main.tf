@@ -19,7 +19,7 @@ locals {
   s3_location_runner_distribution = var.enable_runner_binaries_syncer ? "s3://${var.s3_runner_binaries.id}/${var.s3_runner_binaries.key}" : ""
   default_ami = {
     "windows" = { name = ["Windows_Server-2022-English-Core-ContainersLatest-*"] }
-    "linux"   = var.runner_architecture == "arm64" ? var.runner_amazon_linux_2023 ? { name = ["al2022-ami-2022.*-kernel-5.*-arm64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-arm64-gp2"] } : var.runner_amazon_linux_2023 ? { name = ["al2022-ami-2022.*-kernel-5.*-x86_64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-x86_64-gp2"] }
+    "linux"   = var.runner_architecture == "arm64" ? var.runner_amazon_linux_2023 ? { name = ["al2023-ami-2023.*-kernel-6.*-arm64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-arm64-gp2"] } : var.runner_amazon_linux_2023 ? { name = ["al2023-ami-2023.*-kernel-6.*-x86_64"] } : { name = ["amzn2-ami-kernel-5.*-hvm-*-x86_64-gp2"] }
   }
 
   default_userdata_template = {
