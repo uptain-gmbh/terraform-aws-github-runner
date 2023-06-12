@@ -199,7 +199,7 @@ module "runners" {
   block_device_mappings         = var.block_device_mappings
 
   runner_architecture       = var.runner_architecture
-  runner_amazon_linux_2023 = var.runner_amazon_linux_2023
+  runner_amazon_linux_2023  = var.runner_amazon_linux_2023
   ami_filter                = var.ami_filter
   ami_owners                = var.ami_owners
   ami_id_ssm_parameter_name = var.ami_id_ssm_parameter_name

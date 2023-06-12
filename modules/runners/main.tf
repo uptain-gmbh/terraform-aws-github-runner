@@ -153,6 +153,7 @@ resource "aws_launch_template" "runner" {
     enable_debug_logging            = var.enable_user_data_debug_logging
     s3_location_runner_distribution = local.s3_location_runner_distribution
     pre_install                     = var.userdata_pre_install
+    amazon_linux_2023               = var.runner_amazon_linux_2023
     install_runner = templatefile(local.userdata_install_runner[var.runner_os], {
       S3_LOCATION_RUNNER_DISTRIBUTION = local.s3_location_runner_distribution
       RUNNER_ARCHITECTURE             = var.runner_architecture
@@ -160,8 +161,8 @@ resource "aws_launch_template" "runner" {
     })
     post_install = var.userdata_post_install
     start_runner = templatefile(local.userdata_start_runner[var.runner_os], {
-      metadata_tags     = var.metadata_options != null ? var.metadata_options.instance_metadata_tags : "enabled"
-#      amazon_linux_2023 = var.runner_amazon_linux_2023
+      metadata_tags = var.metadata_options != null ? var.metadata_options.instance_metadata_tags : "enabled"
+      #      amazon_linux_2023 = var.runner_amazon_linux_2023
     })
     ghes_url        = var.ghes_url
     ghes_ssl_verify = var.ghes_ssl_verify
