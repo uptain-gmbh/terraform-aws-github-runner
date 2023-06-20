@@ -72,7 +72,7 @@ variable "runner_boot_time_in_minutes" {
 variable "runner_labels" {
   description = "default labels for runners"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "runner_extra_labels" {
